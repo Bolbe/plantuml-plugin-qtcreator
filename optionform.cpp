@@ -1,6 +1,5 @@
 #include "optionform.h"
 #include "ui_optionform.h"
-#include <QDebug>
 #include <QFileDialog>
 #include <QPixmap>
 #include "plantuml.h"
@@ -11,28 +10,26 @@ OptionForm::OptionForm(Plantuml *plantuml) :
     ui(new Ui::OptionForm)
 {
     ui->setupUi(this);
+    connect(_plantuml, &Plantuml::redrawing, this, &OptionForm::testing);
+    connect(_plantuml, &Plantuml::incomingImage, this, &OptionForm::testImage);
+    connect(_plantuml, &Plantuml::incomingError, this, &OptionForm::processError);
 
     // click browse
     connect(ui->browseButton, &QPushButton::clicked, [this]() {
-        QString jarFileName = QFileDialog::getOpenFileName(this, "Where is plantuml.jar ?",
+        QString jarFileName = QFileDialog::getOpenFileName(this, tr("Where is plantuml.jar ?"),
                                                         "",
                                                         tr("jar (*.jar);;All files (*.*)"));
 
         if (!jarFileName.isNull() && !jarFileName.isEmpty()) {
             ui->pathLineEdit->setText(jarFileName);
-            _plantuml->setJarPath(jarFileName);
         }
 
     });
+    // when the path changes in this input component, notify _plantuml
+    ui->pathLineEdit->setText(_plantuml->jarPath());
+    connect(ui->pathLineEdit, &QLineEdit::textChanged, _plantuml, &Plantuml::setJarPath);
     // click plantUML test
     connect(ui->plantumlButton, &QPushButton::clicked, [this]() {
-        disconnect(_plantuml, 0, this, 0); // first clear all existing connections between plantuml and this
-        connect(_plantuml, &Plantuml::redrawing, this, &OptionForm::testing);
-        connect(_plantuml, &Plantuml::incomingImage, this, &OptionForm::testImage);
-        connect(_plantuml, &Plantuml::incomingError, [this](QString string) {
-            ui->testingLabel->setText(string);
-            setPixmap(QPixmap());
-        });
         _plantuml->draw(QByteArray("TestPlantUML -> OK"));
     });
 
@@ -45,23 +42,27 @@ OptionForm::OptionForm(Plantuml *plantuml) :
 }
 
 OptionForm::~OptionForm() {
-    qDebug() << "Deleting OptionForm";
+    disconnect(_plantuml, 0, this, 0); // clear connections
     delete ui;
 
 }
 
 void OptionForm::testing() {
-    ui->testingLabel->setText("Testing...");
+    ui->testingLabel->setText(tr("Testing..."));
     QPixmap pixmap(":/hourglass.png");
     setPixmap(pixmap);
 }
 
 void OptionForm::testImage(const QByteArray &byteArray) {
-    disconnect(_plantuml, 0, this, 0); // clear connections
     ui->testingLabel->setText("");
     QPixmap pixmap;
     pixmap.loadFromData(byteArray);
     setPixmap(pixmap);
+}
+
+void OptionForm::processError(QString errorString) {
+    ui->testingLabel->setText(errorString);
+    setPixmap(QPixmap());
 }
 
 void OptionForm::setPixmap(const QPixmap &pixmap) {

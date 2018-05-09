@@ -5,7 +5,6 @@
 #include "plantuml.h"
 
 class QLabel;
-class QPushButton;
 
 class OutputPane : public Core::IOutputPane
 {
@@ -14,8 +13,8 @@ public:
 
     // IOutputPane interface
 public:
-    QWidget *outputWidget(QWidget *parent);
-    QList<QWidget *> toolBarWidgets() const;
+    QWidget *outputWidget(QWidget* parent);
+    QList<QWidget*> toolBarWidgets() const;
     QString displayName() const;
     int priorityInStatusBar() const;
     void clearContents();

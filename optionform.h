@@ -22,6 +22,7 @@ private slots:
 
     void testing();
     void testImage(const QByteArray& byteArray);
+    void processError(QString errorString);
 
 private:
     Ui::OptionForm *ui;

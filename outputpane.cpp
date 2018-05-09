@@ -8,7 +8,7 @@ OutputPane::OutputPane() :
     _mainWidget(new QWidget())
 {   
 
-    _statusLabel = new QLabel("Idle");
+    _statusLabel = new QLabel(tr("Idle"));
     _imageLabel = new QLabel();
     QScrollArea* scrollArea = new QScrollArea();
     scrollArea->setWidget(_imageLabel);
@@ -77,14 +77,14 @@ void OutputPane::goToPrev() {
 }
 
 void OutputPane::updateImage(const QByteArray &byteArray) {
-    _statusLabel->setText("Idle");
+    _statusLabel->setText(tr("Idle"));
     QPixmap pixmap;
     pixmap.loadFromData(byteArray);
     setPixmap(pixmap);
 }
 
 void OutputPane::redrawing() {
-    _statusLabel->setText("Redrawing...");
+    _statusLabel->setText(tr("Redrawing..."));
     QPixmap pixmap(":/hourglass.png");
     setPixmap(pixmap);
 }

@@ -11,7 +11,6 @@ class Plantuml : public QObject
     Q_OBJECT
 public:
     explicit Plantuml();
-    void setJarPath(const QString& jarPath);
     QString jarPath() { return _jarPath; }
 
 signals:
@@ -23,6 +22,7 @@ signals:
 public slots:
 
     void draw(const QByteArray &plantuml);
+    void setJarPath(const QString& jarPath);
 
 private slots:
 
