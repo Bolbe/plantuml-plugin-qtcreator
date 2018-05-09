@@ -1,11 +1,11 @@
 {
     \"Name\" : \"PlantUML\",
-    \"Version\" : \"0.1.0\",
+    \"Version\" : \"1.0.0\",
     \"CompatVersion\" : \"4.6.82\",
     \"Vendor\" : \"Frederi Mahieu\",
-    \"Copyright\" : \"Copyright\",
-    \"License\" : \"Put your license information here\",
-    \"Description\" : \"Put a short description of your plugin here\",
-    \"Url\" : \"http://www.mycompany.com\",
+    \"Copyright\" : \"Apache 2.0\",
+    \"License\" : \"Apache 2.0\",
+    \"Description\" : \"This plugin draws the PlantUML diagram described within the file being loaded or saved\",
+    \"Url\" : \"\",
     $$dependencyList
 }
