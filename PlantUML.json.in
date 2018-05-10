@@ -1,7 +1,7 @@
 {
     \"Name\" : \"PlantUML\",
     \"Version\" : \"1.0.0\",
-    \"CompatVersion\" : \"4.6.82\",
+    \"CompatVersion\" : \"4.6\",
     \"Vendor\" : \"Frederi Mahieu\",
     \"Copyright\" : \"Apache 2.0\",
     \"License\" : \"Apache 2.0\",
